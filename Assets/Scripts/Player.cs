@@ -1,0 +1,21 @@
+using UnityEngine;
+
+public class Player : MonoBehaviour
+{
+
+   public bool isonthefloor = true;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+    }
+
+  
+      //if player lands on platform 1 print it landed on platfor 1 ect
+    private void OnTriggerStay2D(Collider2D other) 
+    {
+        Debug.Log(other.gameObject.name);
+        isonthefloor = true;
+    }
+}
