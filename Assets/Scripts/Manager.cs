@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
+using TMPro;
 
 
 
@@ -27,6 +28,10 @@ public class Manager : MonoBehaviour
 bool hasjumped = false;
 
 int score = 0;
+
+public TextMeshProUGUI scouretyper;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() 
     {
@@ -112,7 +117,7 @@ int score = 0;
         /*else{
             animator.SetBool("ButtonPressed", false);
         }*/
-        
+        scouretyper.text = "score: " + score;
     }
 }
 
