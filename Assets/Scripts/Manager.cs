@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 using TMPro;
+using UnityEngine.EventSystems;
+
 
 
 
@@ -31,6 +33,11 @@ int score = 0;
 
 public TextMeshProUGUI scouretyper;
 
+GameObject camera;
+
+bool cmaerapanning = false;
+
+Vector3 camerapstion = new Vector3(0,0,-10);
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() 
@@ -42,9 +49,9 @@ public TextMeshProUGUI scouretyper;
        animator.SetBool("OnFloor", true);
        rb = player.GetComponent<Rigidbody2D>();
        charlie = player.GetComponent<Player>();
-       GameObject platforms = GameObject.Instantiate(platform,platform1.transform.position + new Vector3(5,0,0),Quaternion.identity);
+       GameObject platforms = GameObject.Instantiate(platform,platform1.transform.position + new Vector3(3.1f,0,0),Quaternion.identity);
        platforms.name = "2" ;
-        
+        camera = GameObject.Find("Main Camera");
        
        
       //example of how to spawn platform 
@@ -64,6 +71,8 @@ public TextMeshProUGUI scouretyper;
            score++;
             hasjumped = false;
             Debug.Log("score"+score);
+            cmaerapanning = true;
+            
             
         }
 
@@ -71,6 +80,7 @@ public TextMeshProUGUI scouretyper;
         {
             Debug.Log("false");
             hasjumped = true;
+           camerapstion = camerapstion + new Vector3(3.1f,0,0);
         
         }
     }
@@ -83,15 +93,15 @@ public TextMeshProUGUI scouretyper;
     {
         Isonthefloor();
         animator.SetBool("OnFloor", charlie.isonthefloor);
-        if(jumpAction.IsPressed() && (charlie.isonthefloor == true))
+        if(jumpAction.IsPressed() && (charlie.isonthefloor == true) && (cmaerapanning == false))
         {
             //animator.SetBool("ButtonPressed", true);
             rb.AddForceX(250);
-            rb.AddForceY(850); 
+            rb.AddForceY(500); 
             charlie.isonthefloor = false;
 
             GameObject previosPlatform = GameObject.Find((numberplatform - 1).ToString());
-             GameObject platforms = GameObject.Instantiate(platform,previosPlatform.transform.position + new Vector3(6,0,0),Quaternion.identity);
+             GameObject platforms = GameObject.Instantiate(platform,previosPlatform.transform.position + new Vector3(3.1f,0,0),Quaternion.identity);
             platforms.name = numberplatform.ToString();
             numberplatform++; 
 
@@ -102,6 +112,18 @@ public TextMeshProUGUI scouretyper;
 
             
         }
+
+
+        if(cmaerapanning == true)
+        {
+            
+            camera.transform.Translate(Vector3.right * Time.deltaTime);
+            
+        }
+        if(camera.transform.position.x > camerapstion.x)
+            {
+                cmaerapanning = false;
+            }
       
         if(numberplatform>10)
         {
