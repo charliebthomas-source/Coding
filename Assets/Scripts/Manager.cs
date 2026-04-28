@@ -116,7 +116,7 @@ Vector3 camerapstion = new Vector3(0,0,-10);
 
         if(cmaerapanning == true)
         {
-            
+            //numberplatform the number of the platfor that has just spawned in
             camera.transform.Translate(Vector3.right * Time.deltaTime);
             
         }
