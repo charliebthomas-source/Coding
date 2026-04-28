@@ -116,9 +116,11 @@ Vector3 camerapstion = new Vector3(0,0,-10);
 
         if(cmaerapanning == true)
         {
-            //numberplatform the number of the platfor that has just spawned in
+            //previosPlatform p[laform we are on 
             camera.transform.Translate(Vector3.right * Time.deltaTime);
-            
+            camera.transform = Vector3.Lerp()
+        
+            //transform.position = Vector3.Lerp( transform.position, targetPos + offset, 0.25f);
         }
         if(camera.transform.position.x > camerapstion.x)
             {
