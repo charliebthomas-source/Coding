@@ -38,6 +38,8 @@ GameObject camera;
 bool cmaerapanning = false;
 
 Vector3 camerapstion = new Vector3(0,0,-10);
+GameObject previosPlatform;
+bool jumpedonce = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() 
@@ -59,7 +61,9 @@ Vector3 camerapstion = new Vector3(0,0,-10);
     }
 
 
-  
+   
+       
+
 
 
     public void Isonthefloor()
@@ -71,16 +75,20 @@ Vector3 camerapstion = new Vector3(0,0,-10);
            score++;
             hasjumped = false;
             Debug.Log("score"+score);
-            cmaerapanning = true;
+           // cmaerapanning = true;
+           jumpedonce = true;
+            
             
             
         }
+
+        
 
         if(charlie.isonthefloor == false && hasjumped == false )
         {
             Debug.Log("false");
             hasjumped = true;
-           camerapstion = camerapstion + new Vector3(3.1f,0,0);
+          // camerapstion = camerapstion + new Vector3(3.1f,0,0);
         
         }
     }
@@ -91,6 +99,8 @@ Vector3 camerapstion = new Vector3(0,0,-10);
     // Update is called once per frame 
     void Update()
     {
+
+
         Isonthefloor();
         animator.SetBool("OnFloor", charlie.isonthefloor);
         if(jumpAction.IsPressed() && (charlie.isonthefloor == true) && (cmaerapanning == false))
@@ -100,32 +110,40 @@ Vector3 camerapstion = new Vector3(0,0,-10);
             rb.AddForceY(500); 
             charlie.isonthefloor = false;
 
-            GameObject previosPlatform = GameObject.Find((numberplatform - 1).ToString());
+              previosPlatform = GameObject.Find((numberplatform - 1).ToString());
              GameObject platforms = GameObject.Instantiate(platform,previosPlatform.transform.position + new Vector3(3.1f,0,0),Quaternion.identity);
             platforms.name = numberplatform.ToString();
             numberplatform++; 
 
 
-    
+            
 
            
 
-            
+            /**/
         }
-
-
-        if(cmaerapanning == true)
+       if(jumpedonce == true)
+       {
+       if(charlie.isonthefloor == true)
         {
+            camera.transform.position = Vector3.Lerp( camera.transform.position, previosPlatform.transform.position, 0.01f );
+        }
+       }
+        //camera.GetComponent<Transform>().position
+        //camera.transform.position;
+        
+       // if(cmaerapanning == true)
+       // {
             //previosPlatform p[laform we are on 
-            camera.transform.Translate(Vector3.right * Time.deltaTime);
-            camera.transform = Vector3.Lerp()
+            //camera.transform.Translate(Vector3.right * Time.deltaTime);
+          //  camera.transform.position = Vector3.Lerp( camera.transform.position, previosPlatform.transform.position, 0.5f );
         
             //transform.position = Vector3.Lerp( transform.position, targetPos + offset, 0.25f);
-        }
-        if(camera.transform.position.x > camerapstion.x)
-            {
-                cmaerapanning = false;
-            }
+       // }
+      //  if(camera.transform.position.x > camerapstion.x)
+      //      {
+      //          cmaerapanning = false;
+      //      }
       
         if(numberplatform>10)
         {
