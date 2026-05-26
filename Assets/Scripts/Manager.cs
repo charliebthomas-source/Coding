@@ -8,6 +8,8 @@ using UnityEngine.TextCore.Text;
 using TMPro;
 using UnityEngine.EventSystems;
 
+//i can jump when camera is moving gravity is also set to 0 making player fly
+//make camera panning work 
 
 
 
@@ -40,6 +42,7 @@ bool cmaerapanning = false;
 Vector3 camerapstion = new Vector3(0,0,-10);
 GameObject previosPlatform;
 bool jumpedonce = false;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() 
@@ -99,21 +102,25 @@ bool jumpedonce = false;
     // Update is called once per frame 
     void Update()
     {
+        
+        
 
 
         Isonthefloor();
         animator.SetBool("OnFloor", charlie.isonthefloor);
         if(jumpAction.IsPressed() && (charlie.isonthefloor == true) && (cmaerapanning == false))
         {
+            
             //animator.SetBool("ButtonPressed", true);
             rb.AddForceX(250);
             rb.AddForceY(500); 
             charlie.isonthefloor = false;
 
               previosPlatform = GameObject.Find((numberplatform - 1).ToString());
-             GameObject platforms = GameObject.Instantiate(platform,previosPlatform.transform.position + new Vector3(3.1f,0,0),Quaternion.identity);
+             GameObject platforms = GameObject.Instantiate(platform,previosPlatform.transform.position + new Vector3(Random.Range(2.0f, 4.0f), 0, 0), Quaternion.identity);
             platforms.name = numberplatform.ToString();
             numberplatform++; 
+            
 
 
             
@@ -121,14 +128,31 @@ bool jumpedonce = false;
            
 
             /**/
+
         }
-       if(jumpedonce == true)
-       {
-       if(charlie.isonthefloor == true)
+       if (previosPlatform != null) /*i used ai to help solve the issue of it not working this line i dont know why*/
         {
-            camera.transform.position = Vector3.Lerp( camera.transform.position, previosPlatform.transform.position, 0.01f );
+            Vector3 locationofpreviosplatform = previosPlatform.transform.position;
+            GameObject nextPlatform = GameObject.Find((numberplatform - 1).ToString());/*i used ai to help solve the issue of it not working this line i dont know why*/
+
+            if (nextPlatform != null)/*i used ai to help solve the issue of it not working this line i dont know why*/
+            {
+                Vector3 center = (locationofpreviosplatform + nextPlatform.transform.position) / 2f;
+
+                if (jumpedonce == true && charlie.isonthefloor == true)
+                {
+                    cmaerapanning = true;
+                    camera.transform.position = new Vector3(
+                        Mathf.Lerp(camera.transform.position.x, center.x, 0.01f),
+                        camera.transform.position.y,
+                        camera.transform.position.z
+                    );
+                    
+                }
+                
+            }
         }
-       }
+        
         //camera.GetComponent<Transform>().position
         //camera.transform.position;
         

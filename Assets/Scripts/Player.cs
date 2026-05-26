@@ -19,10 +19,6 @@ public class Player : MonoBehaviour
         Debug.Log(other.gameObject.name);
         isonthefloor = true;
 
-        if(other.gameObject.name == "6")
-    {
-      playerPhysics.gravityScale = 0;
-      playerPhysics.linearVelocity = Vector2.zero;
-    }
+       
     }
 }
