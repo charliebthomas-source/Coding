@@ -10,6 +10,8 @@ using UnityEngine.EventSystems;
 
 //i can jump when camera is moving gravity is also set to 0 making player fly
 //make camera panning work 
+//jump varible distance work 
+//make it so that the player is not able to relse the buttong and then click again and add more power
 
 
 
@@ -33,6 +35,8 @@ bool hasjumped = false;
 
 int score = 0;
 
+float timer = 0;
+
 public TextMeshProUGUI scouretyper;
 
 GameObject camera;
@@ -42,6 +46,7 @@ bool cmaerapanning = false;
 Vector3 camerapstion = new Vector3(0,0,-10);
 GameObject previosPlatform;
 bool jumpedonce = false;
+private Vector3 center = new Vector3(0, 0, 0); 
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -102,13 +107,28 @@ bool jumpedonce = false;
     // Update is called once per frame 
     void Update()
     {
+
+        if (center.x < camera.transform.position.x + 0.0001f )
+        {
+            Debug.Log("this is now working");
+            cmaerapanning = false;
+        }
         
+        if(jumpAction.IsPressed() && (timer < 10))
+        {
+        timer += Time.deltaTime;
+        
+        }
+        
+        
+
+        Debug.Log(timer);
         
 
 
         Isonthefloor();
         animator.SetBool("OnFloor", charlie.isonthefloor);
-        if(jumpAction.IsPressed() && (charlie.isonthefloor == true) && (cmaerapanning == false))
+        if(jumpAction.WasReleasedThisFrame() && (charlie.isonthefloor == true) && (cmaerapanning == false))
         {
             
             //animator.SetBool("ButtonPressed", true);
@@ -137,7 +157,7 @@ bool jumpedonce = false;
 
             if (nextPlatform != null)/*i used ai to help solve the issue of it not working this line i dont know why*/
             {
-                Vector3 center = (locationofpreviosplatform + nextPlatform.transform.position) / 2f;
+               center = (locationofpreviosplatform + nextPlatform.transform.position) / 2f;
 
                 if (jumpedonce == true && charlie.isonthefloor == true)
                 {
