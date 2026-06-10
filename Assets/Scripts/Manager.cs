@@ -7,11 +7,15 @@ using UnityEngine.InputSystem;
 using UnityEngine.TextCore.Text;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+
 
 //i can jump when camera is moving gravity is also set to 0 making player fly
 //make camera panning work 
 //jump varible distance work 
 //make it so that the player is not able to relse the buttong and then click again and add more power
+// for the variable jump i would use a ui scrollbar and make it own skript ect. 
 
 
 
@@ -34,7 +38,7 @@ public class Manager : MonoBehaviour
 bool hasjumped = false;
 
 int score = 0;
-
+ 
 float timer = 0;
 
 public TextMeshProUGUI scouretyper;
@@ -47,6 +51,9 @@ Vector3 camerapstion = new Vector3(0,0,-10);
 GameObject previosPlatform;
 bool jumpedonce = false;
 private Vector3 center = new Vector3(0, 0, 0); 
+
+public Slider slider;//ask ai this
+
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -62,6 +69,7 @@ private Vector3 center = new Vector3(0, 0, 0);
        GameObject platforms = GameObject.Instantiate(platform,platform1.transform.position + new Vector3(3.1f,0,0),Quaternion.identity);
        platforms.name = "2" ;
         camera = GameObject.Find("Main Camera");
+        slider = FindFirstObjectByType<Slider>();//ask ai this
        
        
       //example of how to spawn platform 
@@ -107,6 +115,8 @@ private Vector3 center = new Vector3(0, 0, 0);
     // Update is called once per frame 
     void Update()
     {
+        
+        
 
         if (center.x < camera.transform.position.x + 0.0001f )
         {
@@ -117,24 +127,30 @@ private Vector3 center = new Vector3(0, 0, 0);
         if(jumpAction.IsPressed() && (timer < 10))
         {
         timer += Time.deltaTime;
-        
+       
         }
-        
+
+        slider.value = timer / 10f;
+        if (slider == null) //ask ai if i need this 
+        {
+            Debug.LogError("Manager slider is NULL");
+        }
+              
+        Debug.Log(slider);
         
 
         Debug.Log(timer);
         
-
-
         Isonthefloor();
         animator.SetBool("OnFloor", charlie.isonthefloor);
         if(jumpAction.WasReleasedThisFrame() && (charlie.isonthefloor == true) && (cmaerapanning == false))
         {
             
-            //animator.SetBool("ButtonPressed", true);
-            rb.AddForceX(250);
-            rb.AddForceY(500); 
+            float jumpForce = 100 + (timer * 200);
+            rb.AddForceX(jumpForce);
+            rb.AddForceY(500);
             charlie.isonthefloor = false;
+            timer = 0;
 
               previosPlatform = GameObject.Find((numberplatform - 1).ToString());
              GameObject platforms = GameObject.Instantiate(platform,previosPlatform.transform.position + new Vector3(Random.Range(2.0f, 4.0f), 0, 0), Quaternion.identity);
