@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
   
       //if player lands on platform 1 print it landed on platfor 1 ect
-    private void OnTriggerStay2D(Collider2D other) 
+    private void OnTriggerEnter2D(Collider2D other) 
     {
         Debug.Log(other.gameObject.name);
         isonthefloor = true;

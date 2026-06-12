@@ -11,11 +11,9 @@ using UnityEngine.UI;
 
 
 
-//i can jump when camera is moving gravity is also set to 0 making player fly
-//make camera panning work 
-//jump varible distance work 
-//make it so that the player is not able to relse the buttong and then click again and add more power
-// for the variable jump i would use a ui scrollbar and make it own skript ect. 
+
+//we need to make the scor correlte to the platform the player is on e
+// make it so when the player gose out of screen. below we reset the game and the conter 
 
 
 
@@ -23,14 +21,17 @@ using UnityEngine.UI;
 public class Manager : MonoBehaviour
 {
     InputAction jumpAction;
+    
     Animator animator;
+    
     Rigidbody2D rb;
-    //bool isonthefloor = true;
-    Player charlie; //charlie is linking to the player code
+    
+    Player charlie; 
 
     public GameObject platform;
 
   GameObject player;
+  
  GameObject platform1;
 
   int numberplatform = 3;
@@ -48,15 +49,16 @@ GameObject camera;
 bool cmaerapanning = false;
 
 Vector3 camerapstion = new Vector3(0,0,-10);
+
 GameObject previosPlatform;
+
 bool jumpedonce = false;
+
 private Vector3 center = new Vector3(0, 0, 0); 
 
-public Slider slider;//ask ai this
+public Slider slider;
 
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake() 
     {
         player = GameObject.Find("Player");
@@ -69,11 +71,7 @@ public Slider slider;//ask ai this
        GameObject platforms = GameObject.Instantiate(platform,platform1.transform.position + new Vector3(3.1f,0,0),Quaternion.identity);
        platforms.name = "2" ;
         camera = GameObject.Find("Main Camera");
-        slider = FindFirstObjectByType<Slider>();//ask ai this
-       
-       
-      //example of how to spawn platform 
-       
+        slider = FindFirstObjectByType<Slider>();
     }
 
 
@@ -88,96 +86,88 @@ public Slider slider;//ask ai this
         {
             Debug.Log("true");
             rb.linearVelocityX=0;
-           score++;
             hasjumped = false;
             Debug.Log("score"+score);
-           // cmaerapanning = true;
            jumpedonce = true;
-            
-            
-            
+           score++;
         }
-
         
-
         if(charlie.isonthefloor == false && hasjumped == false )
         {
             Debug.Log("false");
             hasjumped = true;
-          // camerapstion = camerapstion + new Vector3(3.1f,0,0);
-        
         }
     }
+    
+    
 
-     
- //hello
-  
-    // Update is called once per frame 
-    void Update()
+    public void Jumpingforce()
     {
-        
-        
-
-        if (center.x < camera.transform.position.x + 0.0001f )
+        if(jumpAction.IsPressed() && (timer < 10) && (cmaerapanning == false))
         {
-            Debug.Log("this is now working");
-            cmaerapanning = false;
+            timer += Time.deltaTime;
         }
-        
-        if(jumpAction.IsPressed() && (timer < 10))
-        {
-        timer += Time.deltaTime;
-       
-        }
-
-        slider.value = timer / 10f;
-        if (slider == null) //ask ai if i need this 
-        {
-            Debug.LogError("Manager slider is NULL");
-        }
-              
-        Debug.Log(slider);
-        
-       
-        Debug.Log(timer);
-        
-        Isonthefloor();
-        animator.SetBool("OnFloor", charlie.isonthefloor);
         if(jumpAction.WasReleasedThisFrame() && (charlie.isonthefloor == true) && (cmaerapanning == false))
         {
             
-            float jumpForce = 100 + (timer * 200);
+            float jumpForce = 200 + (timer * 50);
             rb.AddForceX(jumpForce);
             rb.AddForceY(500);
             charlie.isonthefloor = false;
             timer = 0;
 
-              previosPlatform = GameObject.Find((numberplatform - 1).ToString());
-             GameObject platforms = GameObject.Instantiate(platform,previosPlatform.transform.position + new Vector3(Random.Range(2.0f, 4.0f), 0, 0), Quaternion.identity);
+            previosPlatform = GameObject.Find((numberplatform - 1).ToString());
+            GameObject platforms = GameObject.Instantiate(platform,previosPlatform.transform.position + new Vector3(Random.Range(2.0f, 4.0f), 0, 0), Quaternion.identity);
             platforms.name = numberplatform.ToString();
             numberplatform++; 
             
+            cmaerapanning = true;
+        }
+    }
+    
+    
+    
 
 
+
+    public void Slidercontrolls()
+    {
+            if (Mathf.Abs(camera.transform.position.x - center.x) < 0.05f)
+            {
+                if ((charlie.isonthefloor == true) || (timer == 0))
+                {
+                    slider.value = timer / 10f;
+                }
+            }
             
 
-           
+    }
 
-            /**/
+    
+    
 
-        }
-       if (previosPlatform != null) /*i used ai to help solve the issue of it not working this line i dont know why*/
+    public void scoreconting()
+    {
+        scouretyper.text = "score: " + score;
+    }
+    
+    
+
+    public void camerapan()
+    {
+        
+        
+        if (previosPlatform != null) 
         {
             Vector3 locationofpreviosplatform = previosPlatform.transform.position;
-            GameObject nextPlatform = GameObject.Find((numberplatform - 1).ToString());/*i used ai to help solve the issue of it not working this line i dont know why*/
+            GameObject nextPlatform = GameObject.Find((numberplatform - 1).ToString()); 
 
-            if (nextPlatform != null)/*i used ai to help solve the issue of it not working this line i dont know why*/
+            if (nextPlatform != null)
             {
-               center = (locationofpreviosplatform + nextPlatform.transform.position) / 2f;
+                center = (locationofpreviosplatform + nextPlatform.transform.position) / 2f;
 
-                if (jumpedonce == true && charlie.isonthefloor == true)
+                if (jumpedonce == true && charlie.isonthefloor == true )
                 {
-                    cmaerapanning = true;
                     camera.transform.position = new Vector3(
                         Mathf.Lerp(camera.transform.position.x, center.x, 0.01f),
                         camera.transform.position.y,
@@ -188,25 +178,42 @@ public Slider slider;//ask ai this
                 
             }
         }
-       
-        
-       
-      
+        if (Mathf.Abs(camera.transform.position.x - center.x) < 0.05f)
+        {
+            cmaerapanning = false;
+        }
+    }
+
+    
+    
+    
+    public void destroyplatforms()
+    {
         if(numberplatform>10)
         {
-          Destroy(platform1);   
+            Destroy(platform1);   
         }
-
         if(numberplatform>11)
         {
-             GameObject objecttoremove = GameObject.Find((numberplatform - 10).ToString());
-             Destroy(objecttoremove);
+            GameObject objecttoremove = GameObject.Find((numberplatform - 10).ToString());
+            Destroy(objecttoremove);
         }
-
-        /*else{
-            animator.SetBool("ButtonPressed", false);
-        }*/
-        scouretyper.text = "score: " + score;
+    }
+    
+    
+    
+    
+    void Update()
+    {
+        
+        Jumpingforce();
+        Slidercontrolls();
+        scoreconting();
+        Isonthefloor();
+        destroyplatforms();
+        camerapan();
+        animator.SetBool("OnFloor", charlie.isonthefloor);
+        
     }
 }
 

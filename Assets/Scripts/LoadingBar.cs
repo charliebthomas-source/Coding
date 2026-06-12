@@ -3,14 +3,14 @@ using UnityEngine.UI;
 
 public class LoadingBar : MonoBehaviour
 {
-    public Slider slider; //ask ai whu this 
+    public Slider slider;
 
     void Start()
     {
         slider.value = 0;
     }
 
-    public void SetProgress(float progress)  //ask ai why this hole thing 
+    public void SetProgress(float progress)  
     {
         slider.value = progress; 
     }
