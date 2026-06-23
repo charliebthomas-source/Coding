@@ -12,8 +12,13 @@ using UnityEngine.UI;
 
 
 
-//we need to make the scor correlte to the platform the player is on e
 // make it so when the player gose out of screen. below we reset the game and the conter 
+// reset game.
+//home screen
+//high score. 
+//share button
+//poslish 
+
 
 
 
