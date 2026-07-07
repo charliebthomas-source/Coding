@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
   Rigidbody2D playerPhysics;
 
    public bool isonthefloor = true;
+   public bool gameOver = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,7 +27,8 @@ public class Player : MonoBehaviour
           }
          if (other.gameObject.name == "Die")
         {
-            SceneManager.LoadScene("Main Game");//we will have here insted a game over screen where they can manuly restart the game 
+            gameOver = true;
+            //SceneManager.LoadScene("Main Game");//we will have here insted a game over screen where they can manuly restart the game 
           }
           
           

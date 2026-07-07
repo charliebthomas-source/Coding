@@ -67,6 +67,9 @@ bool jumpedonce = false;
 private Vector3 center = new Vector3(0, 0, 0); 
 
 public Slider slider;
+ GameObject gameovers;
+ 
+ 
 
 
     void Awake() 
@@ -82,6 +85,7 @@ public Slider slider;
        platforms.name = "2" ;
         camera = GameObject.Find("Main Camera");
         slider = FindFirstObjectByType<Slider>();
+        gameovers = GameObject.Find("Gameovers");
     }
 
 
@@ -229,6 +233,19 @@ public Slider slider;
         Debug.Log("High Score " + Highscore);
     }
 
+     void gsmeroverbaner()
+    {
+        if (charlie.gameOver == true)
+        {
+            Vector3 destention = new Vector3(0, 0, 0); 
+            gameovers.transform.position = new Vector3(
+                gameovers.transform.position.x,
+                Mathf.Lerp(gameovers.transform.position.y, destention.y, 0.01f),
+                gameovers.transform.position.z
+            );
+
+        }
+    }
 
     void Update()
     {
@@ -241,12 +258,13 @@ public Slider slider;
         camerapan();
         animator.SetBool("OnFloor", charlie.isonthefloor);
         Restartme();
+        gsmeroverbaner();
 
-        
-        
-         
 
-    
+
+
+
+
     }
 }
 
