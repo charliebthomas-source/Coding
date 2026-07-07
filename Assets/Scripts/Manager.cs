@@ -50,6 +50,10 @@ float timer = 0;
 
 public TextMeshProUGUI scouretyper;
 
+public TextMeshProUGUI finalscore;
+
+public TextMeshProUGUI Highscore1;
+
 GameObject camera;
 
 bool cmaerapanning = false;
@@ -155,9 +159,13 @@ public Slider slider;
     public void scoreconting()
     {
         scouretyper.text = "score: " + score;
+        finalscore.text = "Score  :  " + score;
+        Highscore1.text = "Highscore  :  " + PlayerPrefs.GetInt("Highscore");
     }
     
-    
+    /*public TextMeshProUGUI finalscore;
+       
+       public TextMeshProUGUI Highscore;*/
 
     public void camerapan()
     {
