@@ -18,7 +18,8 @@ public class Player : MonoBehaviour
       //if player lands on platform 1 print it landed on platfor 1 ect
       private void OnTriggerEnter2D(Collider2D other)
       {
-          if (other.gameObject.CompareTag("Platform"))// make the polatform tag platfor and make this and if true statment 
+       //   if (other.gameObject.CompareTag("Platform"))//not working
+       if (other.gameObject.name != "Die")
           {
               Debug.Log(other.gameObject.name);
               isonthefloor = true;

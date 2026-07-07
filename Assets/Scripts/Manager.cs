@@ -43,8 +43,8 @@ public class Manager : MonoBehaviour
 
 bool hasjumped = false;
 
-public int score = 0;
- int Highscore = 0;
+ int score = 0;
+ 
  
 float timer = 0;
 
@@ -119,7 +119,7 @@ public Slider slider;
             float jumpForce = 200 + (timer * 50);
             rb.AddForceX(jumpForce);
             rb.AddForceY(500);
-         
+            charlie.isonthefloor = false;
             timer = 0;
 
             previosPlatform = GameObject.Find((numberplatform - 1).ToString());
@@ -223,18 +223,21 @@ public Slider slider;
         camerapan();
         animator.SetBool("OnFloor", charlie.isonthefloor);
         Restartme();
-
+         
         
-       // if (score > Highscore)
-       // {
-      //  PlayerPrefs.SetInt("HighScore", score);
- //   }
+        if (score > PlayerPrefs.GetInt("HighScore"))
+        {
+            PlayerPrefs.SetInt("Highscore", score);
+            
+        }
+             
+        
+        Debug.Log(score);
+        Debug.Log("high score" /*+ PlayerPrefs.GetInt("HighScore")*/);
+        
+         
 
-
-     //   int score = PlayerPrefs.GetInt("HighScore", 0); // this needs only haooeb 
-     
-     //think this through 
-
+    
     }
 }
 
