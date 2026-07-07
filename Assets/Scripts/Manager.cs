@@ -208,7 +208,17 @@ public Slider slider;
 
     public void Restartme()
     {
+        int Highscore = PlayerPrefs.GetInt("Highscore");
         
+        if (score > Highscore)
+        {
+            PlayerPrefs.SetInt("Highscore", score);
+            
+        }
+             
+        
+        Debug.Log(score);
+        Debug.Log("High Score " + Highscore);
     }
 
 
@@ -223,17 +233,8 @@ public Slider slider;
         camerapan();
         animator.SetBool("OnFloor", charlie.isonthefloor);
         Restartme();
-         
+
         
-        if (score > PlayerPrefs.GetInt("HighScore"))
-        {
-            PlayerPrefs.SetInt("Highscore", score);
-            
-        }
-             
-        
-        Debug.Log(score);
-        Debug.Log("high score" /*+ PlayerPrefs.GetInt("HighScore")*/);
         
          
 
