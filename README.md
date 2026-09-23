@@ -4,8 +4,10 @@ A game made with unity and c# to be played on itch.io and soon on mobial divices
 
 --
 
-# give it a try with this link -->https://charlieburt.itch.io/jumping-game
+# give it a try with this link -->https://charlieburt.itch.io/jumping-game. 
 
+
+--
 
 
 # point of the game 
