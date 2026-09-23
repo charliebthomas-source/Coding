@@ -23,5 +23,13 @@ A game made with unity and c# to be played on itch.io and soon on mobial divices
 # controlls 
 pressing the space bar and then there should be a slider by the platform showing the power you will have. 
 
+---
+# current errors and todo list
+
+- not having the best game over scree
+- having it glitch if you miss the first landing counting it has a score
+- to make the background look nice
+- polish it all off
+
 
 
