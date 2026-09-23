@@ -2,12 +2,12 @@
 
 A game made with unity and c# to be played on itch.io and soon on mobial divices. it is a cross between running dino and flappu bird 
 
---
+---
 
 # give it a try with this link -->https://charlieburt.itch.io/jumping-game. 
 
 
---
+---
 
 
 # point of the game 
