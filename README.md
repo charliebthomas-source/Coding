@@ -15,7 +15,7 @@ A game made with unity and c# to be played on itch.io and soon on mobial divices
 
 -keeps track of your max score. 
 
-- fun to play
+-fun to play
 
 # controlls 
 pressing the space bar and then there should be a slider by the platform showing the power you will have. 
