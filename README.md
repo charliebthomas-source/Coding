@@ -1,10 +1,17 @@
-![picture of the game]((https://github.com/charliebthomas-source/Coding/blob/e98090503e57483745d9133a86857534718b15bb/Screenshot%202026-09-21%20at%2022.01.29.png))
+# run and jump game. 
 
-Run and jump game this is a cross between flappy bird and the running dino game. this is my first time using c# and unity so just testing ou the ropes.
-you click the space bar to jump and go foward that is as much as you need to know to give it a go. 
+A game made with unity and c# to be played on itch.io and soon on mobial divices. it is a cross between running dino and flappu bird 
 
-still more to go this is just the test run hope you enjoy. 
-link to play bellow 
-https://github.com/charliebthomas-source/Coding
+--
 
-Credits go to charlie Thomas
+# point of the game 
+-the poin of the game is to hold down a button and get launched into the air and pushed foward tawords another platform. 
+-It has endless platforms to jump on 
+-keeps track of your max score. 
+- fun to play
+
+# controlls 
+pressing the space bar and then there should be a slider by the platform showing the power you will have. 
+
+
+
